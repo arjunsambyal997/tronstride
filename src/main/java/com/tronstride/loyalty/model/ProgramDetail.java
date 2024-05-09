@@ -4,9 +4,13 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Data
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "ProgramDetail")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,48 +18,66 @@ public class ProgramDetail {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue()//type
+    @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "id_generator")
+    @SequenceGenerator(name = "id_generator", sequenceName = "id_seq")//type
     private Integer Id;
 
-    @Column(name = "ProgramName")
+    @Column(name = "ProgramName", nullable = false)
     private String programName;
 
-    @Column(name = "WillJoinOnce")
+    @Column(name = "WillJoinOnce", nullable = false)
     private Boolean willJoinOnce;
 
-    @Column(name = "Category")
+    @Column(name = "Category",nullable = false)
     private String category;
 
-    @Column(name = "Description")
+    @Column(name = "Description",nullable = false)
     private String description;
 
-    @Column(name = "CodeRedemptionLimit")
+    @Column(name = "CodeRedemptionLimit",nullable = false)
     private String codeRedemptionLimit;
 
-    @Column(name = "CodeType")
+    @Column(name = "CodeType",nullable = false)
     private String codeType;
 
-    @Column(name = "CodeCount")
+    @Column(name = "CodeCount",nullable = false)
     private String codeCount;
 
 //    @Column(name = "CharSet")
 //    private String charset;
 
-    @Column(name = "CodeLength")
+    @Column(name = "CodeLength",nullable = false)
     private Integer codeLength;
 
-    @Column(name = "Pattern")
+    @Column(name = "Pattern",nullable = false)
     private String pattern;
 
-    @Column(name = "Prefix")
+    @Column(name = "Prefix",nullable = false)
     private String prefix;
 
-    @Column(name = "Postfix")
+    @Column(name = "Postfix",nullable = false)
     private String postfix;
 
-    @Column(name = "AdditionalInformation")
+    @Column(name = "AdditionalInformation",nullable = false)
     private String additionalInformation;
 
-    @Column(name = "CustomCode")
+    @Column(name = "CustomCode",nullable = false)
     private String customCode;
+
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @Column(nullable = false)
+//    private Date LastUpdate;
+//
+//    @PrePersist
+//    private void onCreate(){
+//        LastUpdate = new Date();
+//    }
+
+    @Column(name = "DateCreated", updatable = false)
+    @CreatedDate
+    private long dateCreated;
+
+    @Column(name = "LastUpdated")
+    @LastModifiedDate
+    private long lastUpdated;
 }
