@@ -18,7 +18,7 @@ public class ProgramDetail {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "id_generator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_generator")
     @SequenceGenerator(name = "id_generator", sequenceName = "id_seq")//type
     private Integer Id;
 
@@ -28,41 +28,49 @@ public class ProgramDetail {
     @Column(name = "WillJoinOnce", nullable = false)
     private Boolean willJoinOnce;
 
-    @Column(name = "Category",nullable = false)
+    @Column(name = "Category", nullable = false)
     private String category;
 
-    @Column(name = "Description",nullable = false)
+    @Column(name = "Description", nullable = false)
     private String description;
 
-    @Column(name = "CodeRedemptionLimit",nullable = false)
+    @Column(name = "CodeRedemptionLimit", nullable = false)
     private String codeRedemptionLimit;
 
-    @Column(name = "CodeType",nullable = false)
+    @Column(name = "CodeType", nullable = false)
     private String codeType;
 
-    @Column(name = "CodeCount",nullable = false)
+    @Column(name = "CodeCount", nullable = false)
     private String codeCount;
 
 //    @Column(name = "CharSet")
 //    private String charset;
 
-    @Column(name = "CodeLength",nullable = false)
+    @Column(name = "CodeLength", nullable = false)
     private Integer codeLength;
 
-    @Column(name = "Pattern",nullable = false)
+    @Column(name = "Pattern", nullable = false)
     private String pattern;
 
-    @Column(name = "Prefix",nullable = false)
+    @Column(name = "Prefix", nullable = false)
     private String prefix;
 
-    @Column(name = "Postfix",nullable = false)
+    @Column(name = "Postfix", nullable = false)
     private String postfix;
 
-    @Column(name = "AdditionalInformation",nullable = false)
+    @Column(name = "AdditionalInformation", nullable = false)
     private String additionalInformation;
 
-    @Column(name = "CustomCode",nullable = false)
+    @Column(name = "CustomCode", nullable = false)
     private String customCode;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "discountTypeId", referencedColumnName = "Id")
+    private DiscountTypeEntity discountType;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "orderDiscountType", referencedColumnName = "Id")
+    private OrderDiscountTypeEntity orderDiscountType;
 
 //    @Temporal(TemporalType.TIMESTAMP)
 //    @Column(nullable = false)
