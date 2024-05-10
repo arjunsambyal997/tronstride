@@ -15,13 +15,11 @@ public class ProgramDetailController {
 
     @PostMapping("/addProgramDetail")
     public ProgramDetail postProgramDetail(@RequestBody ProgramDetail programDetail){
-
         return programDetailService.saveDetail(programDetail);
     }
 
     @PutMapping("/updateProgramDetail")
     public ProgramDetail updateProgramDetail(@RequestBody ProgramDetail programDetail){
-
         return programDetailService.updateDetail(programDetail);
     }
 

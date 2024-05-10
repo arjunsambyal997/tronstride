@@ -72,6 +72,10 @@ public class ProgramDetail {
     @JoinColumn(name = "orderDiscountType", referencedColumnName = "Id")
     private OrderDiscountTypeEntity orderDiscountType;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "productDiscountType", referencedColumnName = "Id")
+    private ProductDiscountTypeEntity productDiscountType;
+
 //    @Temporal(TemporalType.TIMESTAMP)
 //    @Column(nullable = false)
 //    private Date LastUpdate;
