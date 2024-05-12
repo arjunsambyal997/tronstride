@@ -18,6 +18,11 @@ public class ProgramDetailController {
         return programDetailService.saveDetail(programDetail);
     }
 
+    @PostMapping("/addProgramDetailList")
+    public List<ProgramDetail> postProgramDetail(@RequestBody List<ProgramDetail> programDetails){
+        return programDetailService.saveListDetail(programDetails);
+    }
+
     @PutMapping("/updateProgramDetail")
     public ProgramDetail updateProgramDetail(@RequestBody ProgramDetail programDetail){
         return programDetailService.updateDetail(programDetail);
@@ -27,5 +32,11 @@ public class ProgramDetailController {
     public List<ProgramDetail> getDetails()
     {
         return programDetailService.getAllDetail();
+    }
+
+    @DeleteMapping("/deleteProgramDetail/{id}")
+    public String deleteProgramDetail(@PathVariable int id){
+
+        return programDetailService.deleteDetail(id);
     }
 }

@@ -18,6 +18,11 @@ public class ProgramDetailService {
         return programDetailRepo.save(programDetail);
     }
 
+    public List<ProgramDetail> saveListDetail(List<ProgramDetail> programDetails){
+
+        return programDetailRepo.saveAll(programDetails);
+    }
+
     public ProgramDetail updateDetail(ProgramDetail programDetail){
 
         ProgramDetail updateProgramDetail=programDetailRepo.findById(programDetail.getId()).orElse(null);
@@ -48,5 +53,15 @@ public class ProgramDetailService {
     public List<ProgramDetail> getAllDetail()
     {
         return programDetailRepo.findAll();
+    }
+
+    public String deleteDetail(int id) {
+        if (programDetailRepo.existsById(id)) {
+            programDetailRepo.deleteById(id);
+            return "deleted " + id;
+        } else {
+            return "id not present";
+        }
+
     }
 }
