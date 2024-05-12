@@ -68,12 +68,6 @@ public class ProgramDetail {
     @JoinColumn(name = "discountTypeId", referencedColumnName = "Id")
     private DiscountTypeEntity discountType;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "timeFrame_id", referencedColumnName = "Id")
-//    private ProductTimeframe productTimeframe;
-    @OneToOne(mappedBy = "programDetail", cascade = CascadeType.ALL)
-    private ProductTimeframe productTimeframe;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "orderDiscountType", referencedColumnName = "Id")
     private OrderDiscountTypeEntity orderDiscountType;
@@ -89,4 +83,6 @@ public class ProgramDetail {
     @Column(name = "LastUpdated")
     @LastModifiedDate
     private String lastUpdated;
+
+    private boolean isExpired;
 }
