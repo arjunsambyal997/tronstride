@@ -92,4 +92,6 @@ public class ProgramDetail {
     @Column(name = "LastUpdated")
     @LastModifiedDate
     private long lastUpdated;
+
+    private boolean isExpired;
 }
