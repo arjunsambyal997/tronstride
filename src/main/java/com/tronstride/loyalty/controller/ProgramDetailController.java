@@ -44,4 +44,9 @@ public class ProgramDetailController {
 
         return programDetailService.deleteDetail(id);
     }
+
+    @PutMapping("/publish/{id}")
+    public boolean publishPromo(@PathVariable int id) {
+        return programDetailService.publishPromo(id);
+    }
 }

@@ -106,4 +106,12 @@ public class ProgramDetailService {
         }
 
     }
+
+    public boolean publishPromo(int id) {
+        ProgramDetail oldProgramDetailData = programDetailRepo.findById(id).orElse(null);
+        if (Objects.nonNull(oldProgramDetailData)) {
+
+        }
+        return true;
+    }
 }
