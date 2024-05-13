@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -13,5 +13,5 @@ public class TimeSpanDTO {
 
     private String type;
     private Integer value;
-    private LocalDate startsOn;
+    private LocalDateTime startsOn;
 }

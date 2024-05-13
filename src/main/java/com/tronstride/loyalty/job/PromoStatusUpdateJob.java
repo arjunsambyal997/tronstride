@@ -9,10 +9,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.sql.Time;
+import java.time.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -30,7 +30,7 @@ public class PromoStatusUpdateJob {
         log.info("PromoStatusUpdateJob started..");
         // Retrieve all rows from the table
         List<ProgramDetail> entities = programDetailRepo.findAll();
-        LocalDate currentTime = LocalDate.now(ZoneOffset.UTC);
+        LocalDateTime currentTime = LocalDateTime.now(ZoneOffset.UTC);
 
       entities.stream().filter(programDetail ->
                programDetail.getProductTimeframe().getExpiresOn().isBefore(currentTime)
@@ -40,8 +40,31 @@ public class PromoStatusUpdateJob {
        }).forEach( programDetail -> {
            programDetailRepo.save(programDetail);
        });
-
-
+      // Logic to set Expired On in case npt already set or valid for flag is set to true
+        entities.stream().filter(programDetail -> programDetail.isExpired() != true && Objects.nonNull(programDetail.getProductTimeframe().getPublishedOn()) && programDetail.getProductTimeframe().getValidFor())
+                        .map(programDetail -> {
+                            Timeframe timeframe = programDetail.getProductTimeframe();
+                            switch(timeframe.getTimeSpanEntity().getType()) {
+                                case "hour" :
+                                    timeframe.setExpiresOn(timeframe.getExpiresOn().plus(Duration.ofHours(timeframe.getSpanValue())));
+                                    programDetail.setProductTimeframe(timeframe);
+                                    return programDetail;
+                                case "day" :
+                                    timeframe.setExpiresOn(timeframe.getExpiresOn().plus(Period.ofDays(timeframe.getSpanValue())));
+                                    programDetail.setProductTimeframe(timeframe);
+                                    return programDetail;
+                                case "month" :
+                                    timeframe.setExpiresOn(timeframe.getExpiresOn().plus(Period.ofMonths(timeframe.getSpanValue())));
+                                    programDetail.setProductTimeframe(timeframe);
+                                    return programDetail;
+                                case "year" :
+                                    timeframe.setExpiresOn(timeframe.getExpiresOn().plus(Period.ofYears(timeframe.getSpanValue())));
+                                    programDetail.setProductTimeframe(timeframe);
+                                    return programDetail;
+                                default :
+                                    return programDetail;
+                            }
+                        }) .forEach(programDetail -> programDetailRepo.save(programDetail));
 
         log.info("PromoStatusUpdateJob ended..");
 

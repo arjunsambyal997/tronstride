@@ -7,7 +7,7 @@ import com.tronstride.loyalty.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Objects;
@@ -117,7 +117,7 @@ public class ProgramDetailService {
         if (timeSpanDTO.getStartsOn() != null) {
             timeframe.setStartOn(timeSpanDTO.getStartsOn());
         } else {
-            timeframe.setStartOn(LocalDate.now(ZoneOffset.UTC));
+            timeframe.setStartOn(LocalDateTime.now(ZoneOffset.UTC));
         }
 
         return timeframe.getId();
@@ -126,7 +126,7 @@ public class ProgramDetailService {
     public boolean publishPromo(int id) {
         ProgramDetail oldProgramDetailData = programDetailRepo.findById(id).orElse(null);
         if (Objects.nonNull(oldProgramDetailData)) {
-            oldProgramDetailData.getProductTimeframe().setPublishedOn(LocalDate.now());
+            oldProgramDetailData.getProductTimeframe().setPublishedOn(LocalDateTime.now());
             ProgramDetail savedProgramDetail = programDetailRepo.save(oldProgramDetailData);
             if (Objects.nonNull(savedProgramDetail)) {
                 return true;

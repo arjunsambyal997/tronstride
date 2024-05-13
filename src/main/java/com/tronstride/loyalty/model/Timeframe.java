@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -26,10 +26,10 @@ public class Timeframe {
     private Integer id;
 
     @Column(name = "start_on")
-    private LocalDate startOn;
+    private LocalDateTime startOn;
 
     @Column(name = "expires_on")
-    private LocalDate expiresOn;
+    private LocalDateTime expiresOn;
 
     @Column(name = "ValidFor")
     private Boolean validFor;
@@ -39,13 +39,13 @@ public class Timeframe {
 
     @Column(name = "DateCreated", updatable = false)
     @CreatedDate
-    private LocalDate dateCreated;
+    private LocalDateTime dateCreated;
 
     @Column(name = "LastUpdated")
     @LastModifiedDate
-    private LocalDate lastUpdated;
+    private LocalDateTime lastUpdated;
     @Column(name="published_on")
-    private LocalDate publishedOn;
+    private LocalDateTime publishedOn;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "timeSpan", referencedColumnName = "Id")
