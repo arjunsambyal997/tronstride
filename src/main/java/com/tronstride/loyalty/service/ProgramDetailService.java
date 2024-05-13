@@ -109,18 +109,38 @@ public class ProgramDetailService {
     }
 
     public Integer updateProductTimeframe(Integer id, TimeSpanDTO timeSpanDTO) {
-        Timeframe timeframe = timeFrameRepo.getReferenceById(id);
+        ProgramDetail programDetail = programDetailRepo.getReferenceById(id);
         TimeSpanEntity spanEntity = timeSpanRepo.getByType(timeSpanDTO.getType());
-        timeframe.setSpanValue(timeSpanDTO.getValue());
-        timeframe.setTimeSpanEntity(spanEntity);
 
-        if (timeSpanDTO.getStartsOn() != null) {
-            timeframe.setStartOn(timeSpanDTO.getStartsOn());
+        if (Objects.nonNull(programDetail.getProductTimeframe())) {
+            programDetail.getProductTimeframe().setTimeSpanEntity(spanEntity);
+            programDetail.getProductTimeframe().setSpanValue(timeSpanDTO.getValue());
+            if (timeSpanDTO.getExpiredOn() != null) {
+                programDetail.getProductTimeframe().setExpiresOn(timeSpanDTO.getExpiredOn());
+            }
+            if (timeSpanDTO.getStartsOn() != null) {
+                programDetail.getProductTimeframe().setStartOn(timeSpanDTO.getStartsOn());
+            } else {
+                programDetail.getProductTimeframe().setStartOn(LocalDateTime.now(ZoneOffset.UTC));
+            }
         } else {
-            timeframe.setStartOn(LocalDateTime.now(ZoneOffset.UTC));
+            Timeframe timeframe = new Timeframe();
+            timeframe.setTimeSpanEntity(spanEntity);
+            timeframe.setSpanValue(timeSpanDTO.getValue());
+            if (timeSpanDTO.getExpiredOn() != null) {
+                timeframe.setExpiresOn(timeSpanDTO.getExpiredOn());
+            }
+            if (timeSpanDTO.getStartsOn() != null) {
+                timeframe.setStartOn(timeSpanDTO.getStartsOn());
+            } else {
+                timeframe.setStartOn(LocalDateTime.now(ZoneOffset.UTC));
+            }
+            programDetail.setProductTimeframe(timeframe);
         }
 
-        return timeframe.getId();
+        programDetailRepo.save(programDetail);
+
+        return programDetail.getId();
     }
 
     public boolean publishPromo(int id) {

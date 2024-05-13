@@ -14,4 +14,5 @@ public class TimeSpanDTO {
     private String type;
     private Integer value;
     private LocalDateTime startsOn;
+    private LocalDateTime expiredOn;
 }

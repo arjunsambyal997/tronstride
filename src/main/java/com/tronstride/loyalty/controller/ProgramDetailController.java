@@ -51,7 +51,7 @@ public class ProgramDetailController {
         return programDetailService.publishPromo(id);
     }
 
-    @PutMapping("/updateProductTImeframe/{id}")
+    @PutMapping("/updateProductTimeframe/{id}")
     public Integer updateProductTimeFrame(@PathVariable Integer id, @RequestBody TimeSpanDTO timeSpanDTO){
        return programDetailService.updateProductTimeframe(id,timeSpanDTO);
     }

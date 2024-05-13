@@ -22,7 +22,8 @@ import java.time.LocalDateTime;
 public class Timeframe {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_generator")
+    @SequenceGenerator(name = "id_generator", sequenceName = "id_seq")//type
     private Integer id;
 
     @Column(name = "start_on")
@@ -44,7 +45,7 @@ public class Timeframe {
     @Column(name = "LastUpdated")
     @LastModifiedDate
     private LocalDateTime lastUpdated;
-    @Column(name="published_on")
+    @Column(name = "published_on")
     private LocalDateTime publishedOn;
 
     @OneToOne(cascade = CascadeType.ALL)
