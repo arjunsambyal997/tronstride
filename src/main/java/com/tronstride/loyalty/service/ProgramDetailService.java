@@ -76,20 +76,20 @@ public class ProgramDetailService {
 
         if (updateDetail != null) {
             if (detailDto.getDiscountType() != null) {
-                DiscountTypeEntity discountType = discountTypeRepo.getReferenceById(detailDto.getDiscountType().getId());
+                DiscountTypeEntity discountType = discountTypeRepo.getByDiscountType(detailDto.getDiscountType().getDiscountType());
                 updateDetail.setDiscountType(discountType);
             } else {
                 updateDetail.setOrderDiscountType(null);
             }
-            if (detailDto.getOrderDiscountType().getId() == null) {
+            if (detailDto.getOrderDiscountType() == null) {
                 updateDetail.setOrderDiscountType(null);
-                if (detailDto.getProductDiscountType().getId() != null) {
-                    ProductDiscountTypeEntity productDiscountTypeEntity = productDiscountTypeRepo.getReferenceById(detailDto.getProductDiscountType().getId());
+                if (detailDto.getProductDiscountType() != null) {
+                    ProductDiscountTypeEntity productDiscountTypeEntity = productDiscountTypeRepo.getByProductDiscountType(detailDto.getProductDiscountType().getProductDiscountType());
                     updateDetail.setProductDiscountType(productDiscountTypeEntity);
                 }
             } else {
-                updateDetail.setProductDiscountType(null);
-                OrderDiscountTypeEntity orderDiscountType = orderDiscountTypeRepo.getReferenceById(detailDto.getOrderDiscountType().getId());
+                updateDetail.setProductDiscountType(null); // assuming we have the order present
+                OrderDiscountTypeEntity orderDiscountType = orderDiscountTypeRepo.getByOrderDiscountType(detailDto.getOrderDiscountType().getOrderDiscountType());
                 updateDetail.setOrderDiscountType(orderDiscountType);
             }
             programDetailRepo.save(updateDetail);
