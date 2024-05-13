@@ -35,7 +35,7 @@ public class ProductTimeframe {
     private Boolean validFor;
 
     @Column(name = "Span")
-    private Integer span;
+    private Integer spanValue;
 
     @Column(name = "DateCreated", updatable = false)
     @CreatedDate
@@ -44,5 +44,11 @@ public class ProductTimeframe {
     @Column(name = "LastUpdated")
     @LastModifiedDate
     private LocalDate lastUpdated;
+    @Column(name="published_on")
+    private LocalDate publishedOn;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "timeSpan", referencedColumnName = "Id")
+    private TimeSpanEntity timeSpanEntity;
 
 }
