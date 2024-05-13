@@ -32,7 +32,7 @@ public class PromoStatusUpdateJob {
         List<ProgramDetail> entities = programDetailRepo.findAll();
         LocalDateTime currentTime = LocalDateTime.now(ZoneOffset.UTC);
 
-      entities.stream().filter(programDetail ->
+      entities.stream().filter(programDetail -> Objects.nonNull(programDetail.getProductTimeframe().getExpiresOn()) &&
                programDetail.getProductTimeframe().getExpiresOn().isBefore(currentTime)
        ).map(programDetail -> {
            programDetail.setExpired(true);
