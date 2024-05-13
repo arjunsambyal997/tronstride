@@ -87,10 +87,11 @@ public class ProgramDetailService {
                     ProductDiscountTypeEntity productDiscountTypeEntity = productDiscountTypeRepo.getReferenceById(detailDto.getProductDiscountType().getId());
                     updateDetail.setProductDiscountType(productDiscountTypeEntity);
                 }
+            } else {
+                updateDetail.setProductDiscountType(null);
+                OrderDiscountTypeEntity orderDiscountType = orderDiscountTypeRepo.getReferenceById(detailDto.getOrderDiscountType().getId());
+                updateDetail.setOrderDiscountType(orderDiscountType);
             }
-            updateDetail.setProductDiscountType(null);
-            OrderDiscountTypeEntity orderDiscountType = orderDiscountTypeRepo.getReferenceById(detailDto.getOrderDiscountType().getId());
-            updateDetail.setOrderDiscountType(orderDiscountType);
             programDetailRepo.save(updateDetail);
         }
         return Objects.requireNonNull(updateDetail).getId();
