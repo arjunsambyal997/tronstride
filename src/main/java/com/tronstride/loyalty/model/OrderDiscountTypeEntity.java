@@ -1,6 +1,5 @@
 package com.tronstride.loyalty.model;
 
-import com.tronstride.loyalty.enums.OrderDiscountType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

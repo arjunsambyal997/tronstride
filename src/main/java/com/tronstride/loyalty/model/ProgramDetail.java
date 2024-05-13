@@ -76,22 +76,13 @@ public class ProgramDetail {
     @JoinColumn(name = "productDiscountType", referencedColumnName = "Id")
     private ProductDiscountTypeEntity productDiscountType;
 
-//    @Temporal(TemporalType.TIMESTAMP)
-//    @Column(nullable = false)
-//    private Date LastUpdate;
-//
-//    @PrePersist
-//    private void onCreate(){
-//        LastUpdate = new Date();
-//    }
-
     @Column(name = "DateCreated", updatable = false)
     @CreatedDate
-    private long dateCreated;
+    private String dateCreated;
 
     @Column(name = "LastUpdated")
     @LastModifiedDate
-    private long lastUpdated;
+    private String lastUpdated;
 
     private boolean isExpired;
 }
