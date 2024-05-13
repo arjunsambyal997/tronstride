@@ -12,6 +12,9 @@ import com.tronstride.loyalty.repository.ProgramDetailRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -110,8 +113,12 @@ public class ProgramDetailService {
     public boolean publishPromo(int id) {
         ProgramDetail oldProgramDetailData = programDetailRepo.findById(id).orElse(null);
         if (Objects.nonNull(oldProgramDetailData)) {
-
+                oldProgramDetailData.getTimeframe().setPublishedOn(LocalDate.now());
+               ProgramDetail savedProgramDetail =  programDetailRepo.save(oldProgramDetailData);
+               if(Objects.nonNull(savedProgramDetail)) {
+                   return true;
+               }
         }
-        return true;
+        return false;
     }
 }
