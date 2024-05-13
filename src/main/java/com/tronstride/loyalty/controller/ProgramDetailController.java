@@ -1,6 +1,7 @@
 package com.tronstride.loyalty.controller;
 
 import com.tronstride.loyalty.DTO.DiscountDetailDTO;
+import com.tronstride.loyalty.DTO.TimeSpanDTO;
 import com.tronstride.loyalty.model.ProgramDetail;
 import com.tronstride.loyalty.service.ProgramDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class ProgramDetailController {
     }
 
     @PostMapping("/addProgramDetailList")
-    public List<ProgramDetail> postProgramDetail(@RequestBody List<ProgramDetail> programDetails){
+    public List<ProgramDetail> postProgramDetail(@RequestBody List<ProgramDetail> programDetails) {
         return programDetailService.saveListDetail(programDetails);
     }
 
@@ -40,7 +41,7 @@ public class ProgramDetailController {
     }
 
     @DeleteMapping("/deleteProgramDetail/{id}")
-    public String deleteProgramDetail(@PathVariable int id){
+    public String deleteProgramDetail(@PathVariable int id) {
 
         return programDetailService.deleteDetail(id);
     }
@@ -48,5 +49,10 @@ public class ProgramDetailController {
     @PutMapping("/publish/{id}")
     public boolean publishPromo(@PathVariable int id) {
         return programDetailService.publishPromo(id);
+    }
+
+    @PutMapping("/updateProductTImeframe/{id}")
+    public Integer updateProductTimeFrame(@PathVariable Integer id, @RequestBody TimeSpanDTO timeSpanDTO){
+       return programDetailService.updateProductTimeframe(id,timeSpanDTO);
     }
 }

@@ -77,8 +77,8 @@ public class ProgramDetail {
     private ProductDiscountTypeEntity productDiscountType;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "timeframe", referencedColumnName = "Id")
-    private Timeframe timeframe;
+    @JoinColumn(name = "Timeframe", referencedColumnName = "Id")
+    private Timeframe productTimeframe;
 
     @Column(name = "DateCreated", updatable = false)
     @CreatedDate

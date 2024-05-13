@@ -1,20 +1,13 @@
 package com.tronstride.loyalty.service;
 
 import com.tronstride.loyalty.DTO.DiscountDetailDTO;
-import com.tronstride.loyalty.model.DiscountTypeEntity;
-import com.tronstride.loyalty.model.OrderDiscountTypeEntity;
-import com.tronstride.loyalty.model.ProductDiscountTypeEntity;
-import com.tronstride.loyalty.model.ProgramDetail;
-import com.tronstride.loyalty.repository.DiscountTypeRepo;
-import com.tronstride.loyalty.repository.OrderDiscountTypeRepo;
-import com.tronstride.loyalty.repository.ProductDiscountTypeRepo;
-import com.tronstride.loyalty.repository.ProgramDetailRepo;
+import com.tronstride.loyalty.DTO.TimeSpanDTO;
+import com.tronstride.loyalty.model.*;
+import com.tronstride.loyalty.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,13 +22,17 @@ public class ProgramDetailService {
     private ProductDiscountTypeRepo productDiscountTypeRepo;
     @Autowired
     private OrderDiscountTypeRepo orderDiscountTypeRepo;
+    @Autowired
+    private ProductTimeFrameRepo timeFrameRepo;
+    @Autowired
+    private TimeSpanRepo timeSpanRepo;
 
     public ProgramDetail saveDetail(ProgramDetail programDetail) {
 
         return programDetailRepo.save(programDetail);
     }
 
-    public List<ProgramDetail> saveListDetail(List<ProgramDetail> programDetails){
+    public List<ProgramDetail> saveListDetail(List<ProgramDetail> programDetails) {
 
         return programDetailRepo.saveAll(programDetails);
     }
@@ -110,14 +107,29 @@ public class ProgramDetailService {
 
     }
 
+    public Integer updateProductTimeframe(Integer id, TimeSpanDTO timeSpanDTO) {
+        Timeframe timeframe = timeFrameRepo.getReferenceById(id);
+        TimeSpanEntity spanEntity = timeSpanRepo.getByType(timeSpanDTO.getType());
+        timeframe.setSpanValue(timeSpanDTO.getValue());
+        timeframe.setTimeSpanEntity(spanEntity);
+
+        if (timeSpanDTO.getStartsOn() != null) {
+            timeframe.setStartOn(timeSpanDTO.getStartsOn());
+        } else {
+            timeframe.setStartOn(LocalDate.now());
+        }
+
+        return timeframe.getId();
+    }
+
     public boolean publishPromo(int id) {
         ProgramDetail oldProgramDetailData = programDetailRepo.findById(id).orElse(null);
         if (Objects.nonNull(oldProgramDetailData)) {
-                oldProgramDetailData.getTimeframe().setPublishedOn(LocalDate.now());
-               ProgramDetail savedProgramDetail =  programDetailRepo.save(oldProgramDetailData);
-               if(Objects.nonNull(savedProgramDetail)) {
-                   return true;
-               }
+            oldProgramDetailData.getProductTimeframe().setPublishedOn(LocalDate.now());
+            ProgramDetail savedProgramDetail = programDetailRepo.save(oldProgramDetailData);
+            if (Objects.nonNull(savedProgramDetail)) {
+                return true;
+            }
         }
         return false;
     }
