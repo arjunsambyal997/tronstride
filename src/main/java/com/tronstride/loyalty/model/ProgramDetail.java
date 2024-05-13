@@ -88,5 +88,5 @@ public class ProgramDetail {
     @LastModifiedDate
     private String lastUpdated;
 
-    private boolean isExpired;
+    private boolean expired;
 }
