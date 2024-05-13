@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @Data
 
 
-public class ProductTimeframe {
+public class Timeframe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
