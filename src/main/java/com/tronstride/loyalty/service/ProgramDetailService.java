@@ -69,7 +69,11 @@ public class ProgramDetailService {
     }
 
     public ProgramDetail getProgramDetailById(Integer id) {
-        return programDetailRepo.getReferenceById(id);
+        boolean detail = programDetailRepo.findById(id).isPresent();
+        if (detail) {
+            return programDetailRepo.findById(id).get();
+        }
+        return null;
     }
 
     public Integer updateProgramDetailById(DiscountDetailDTO detailDto, Integer id) {

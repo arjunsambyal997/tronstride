@@ -35,6 +35,11 @@ public class ProgramDetailController {
         return programDetailService.getAllDetail();
     }
 
+    @GetMapping("/getDetailById/{id}")
+    public ProgramDetail getDetail(@PathVariable Integer id) {
+        return programDetailService.getProgramDetailById(id);
+    }
+
     @PutMapping("/updateProgramDetail/{id}")
     public Integer updateDetail(@PathVariable Integer id, @RequestBody DiscountDetailDTO detailDTO) {
         return programDetailService.updateProgramDetailById(detailDTO, id);
@@ -52,7 +57,7 @@ public class ProgramDetailController {
     }
 
     @PutMapping("/updateProductTimeframe/{id}")
-    public Integer updateProductTimeFrame(@PathVariable Integer id, @RequestBody TimeSpanDTO timeSpanDTO){
-       return programDetailService.updateProductTimeframe(id,timeSpanDTO);
+    public Integer updateProductTimeFrame(@PathVariable Integer id, @RequestBody TimeSpanDTO timeSpanDTO) {
+        return programDetailService.updateProductTimeframe(id, timeSpanDTO);
     }
 }
