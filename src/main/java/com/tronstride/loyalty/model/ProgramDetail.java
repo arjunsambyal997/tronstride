@@ -8,6 +8,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.util.List;
+
 @Entity
 @Data
 @EntityListeners(AuditingEntityListener.class)
@@ -87,6 +89,12 @@ public class ProgramDetail {
     @Column(name = "DateCreated", updatable = false)
     @CreatedDate
     private String dateCreated;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programDetail")
+    private List<DiscountedProducts> discountedProductsList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programDetail")
+    private List<DiscountedCollections> discountedCollectionsList;
 
     @Column(name = "LastUpdated")
     @LastModifiedDate
