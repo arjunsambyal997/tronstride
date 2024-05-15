@@ -203,4 +203,38 @@ public class ProgramDetailService {
         }
         return newProduct.getId();
     }
+
+    public DiscountedCollections getCollectionById(Integer id) {
+        boolean isPresent = discountedCollectionsRepo.findById(id).isPresent();
+        if (isPresent) {
+            return discountedCollectionsRepo.findById(id).get();
+        }
+        return null;
+    }
+
+    public DiscountedProducts getProductsById(Integer id) {
+        boolean isPresent = discountedProductsRepo.findById(id).isPresent();
+        if (isPresent) {
+            return discountedProductsRepo.findById(id).get();
+        }
+        return null;
+    }
+
+    public String deleteCollection(Integer id) {
+        boolean isPresent = discountedCollectionsRepo.findById(id).isPresent();
+        if (isPresent) {
+            discountedCollectionsRepo.deleteById(id);
+            return "Success";
+        }
+        return "Id not Present";
+    }
+
+    public String deleteProduct(Integer id) {
+        boolean isPresent = discountedProductsRepo.findById(id).isPresent();
+        if (isPresent) {
+            discountedProductsRepo.deleteById(id);
+            return "Success";
+        }
+        return "Id not Present";
+    }
 }

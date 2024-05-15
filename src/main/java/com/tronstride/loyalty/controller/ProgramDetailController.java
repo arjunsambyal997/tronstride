@@ -83,4 +83,24 @@ public class ProgramDetailController {
     public Integer newDiscountedCollection(@RequestBody  DiscountedCollections collections) {
         return programDetailService.createNewCollection(collections);
     }
+
+    @GetMapping("/products/getProduct/{id}")
+    public DiscountedProducts getProductById(@PathVariable Integer id) {
+        return programDetailService.getProductsById(id);
+    }
+
+    @GetMapping("/products/getCollection/{id}")
+    public DiscountedCollections getCollectionById(@PathVariable Integer id) {
+        return programDetailService.getCollectionById(id);
+    }
+
+    @DeleteMapping("/products/deleteProduct/{id}")
+    public String deleteProduct(@PathVariable Integer id) {
+        return programDetailService.deleteProduct(id);
+    }
+
+    @DeleteMapping("/products/deleteCollection/{id}")
+    public String deleteCollection(@PathVariable Integer id) {
+        return programDetailService.deleteCollection(id);
+    }
 }
