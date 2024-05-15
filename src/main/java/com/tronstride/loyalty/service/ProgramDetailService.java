@@ -87,6 +87,7 @@ public class ProgramDetailService {
             if (detailDto.getDiscountType() != null) {
                 DiscountTypeEntity discountType = discountTypeRepo.getByDiscountType(detailDto.getDiscountType().getDiscountType());
                 updateDetail.setDiscountType(discountType);
+                updateDetail.setDiscountAmount(detailDto.getDiscountAmount());
             } else {
                 updateDetail.setOrderDiscountType(null);
             }

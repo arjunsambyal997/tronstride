@@ -17,7 +17,7 @@ public class DiscountDetailDTO {
     private OrderDiscountTypeEntity orderDiscountType;
 
     private ProductDiscountTypeEntity productDiscountType;
-
+    private Long discountAmount;
     List<DiscountedProducts> discountedProductsList;
     List<DiscountedCollections> discountedCollectionsList;
 
