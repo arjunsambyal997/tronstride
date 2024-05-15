@@ -65,6 +65,8 @@ public class ProgramDetail {
 
     @Column(name = "CustomCode", nullable = false)
     private String customCode;
+    @Column(name = "DiscountAmount", nullable = false)
+    private Long discountAmount;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "discountTypeId", referencedColumnName = "Id")
