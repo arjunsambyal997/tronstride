@@ -9,9 +9,11 @@ import java.util.List;
 @Data
 public class DiscountedCollections {
     @Id
-    @Column(name = "Id")
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    private String collectionName;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "collection_id")

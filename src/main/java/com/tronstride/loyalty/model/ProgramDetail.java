@@ -74,9 +74,6 @@ public class ProgramDetail {
     @JoinColumn(name = "orderDiscountType", referencedColumnName = "Id")
     private OrderDiscountTypeEntity orderDiscountType;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "productId", referencedColumnName = "Id")
-    private DiscountedProducts discountedProducts;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "productDiscountType", referencedColumnName = "Id")
@@ -90,10 +87,12 @@ public class ProgramDetail {
     @CreatedDate
     private String dateCreated;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programDetail")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id_discounted", referencedColumnName = "ID")
     private List<DiscountedProducts> discountedProductsList;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programDetail")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "collection_id_discounted", referencedColumnName = "ID")
     private List<DiscountedCollections> discountedCollectionsList;
 
     @Column(name = "LastUpdated")
@@ -101,6 +100,4 @@ public class ProgramDetail {
     private String lastUpdated;
 
     private boolean expired;
-
-    private String productId;
 }
