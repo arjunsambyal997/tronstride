@@ -183,6 +183,7 @@ public class ProgramDetailService {
     public Integer createNewCollection(DiscountedCollections collections) {
         DiscountedCollections newCollection = new DiscountedCollections();
         if (Objects.nonNull(collections.getDiscountedProductsList())) {
+            newCollection.setCollectionName(collections.getCollectionName());
             newCollection.setDiscountedProductsList(collections.getDiscountedProductsList());
             discountedCollectionsRepo.save(newCollection);
         } else {

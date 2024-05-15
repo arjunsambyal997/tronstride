@@ -69,18 +69,18 @@ public class ProgramDetailController {
         return programDetailService.getAllDiscountedProducts();
     }
 
-    @GetMapping("/products/DiscountedCollections")
+    @GetMapping("/products/discountedCollections")
     public List<DiscountedCollections> getAllDiscountedCollections() {
         return programDetailService.getAllDiscountedProductsCollections();
     }
 
     @PostMapping("/newDiscountedProduct")
-    public Integer newDiscountedProduct(DiscountedProducts product) {
+    public Integer newDiscountedProduct( @RequestBody DiscountedProducts product) {
         return programDetailService.createNewDiscountedProduct(product);
     }
 
     @PostMapping("/newDiscountedCollection")
-    public Integer newDiscountedCollection(DiscountedCollections collections) {
+    public Integer newDiscountedCollection(@RequestBody  DiscountedCollections collections) {
         return programDetailService.createNewCollection(collections);
     }
 }
