@@ -103,6 +103,8 @@ public class ProgramDetailService {
                 updateDetail.setProductDiscountType(null); // assuming we have the order present
                 OrderDiscountTypeEntity orderDiscountType = orderDiscountTypeRepo.getByOrderDiscountType(detailDto.getOrderDiscountType().getOrderDiscountType());
                 updateDetail.setOrderDiscountType(orderDiscountType);
+                updateDetail.setDiscountedProductsList(null);
+                updateDetail.setDiscountedCollectionsList(null);
             }
             programDetailRepo.save(updateDetail);
         }
