@@ -2,6 +2,7 @@ package com.tronstride.loyalty.controller;
 
 import com.tronstride.loyalty.DTO.DiscountDetailDTO;
 import com.tronstride.loyalty.DTO.TimeSpanDTO;
+import com.tronstride.loyalty.model.DiscountedCollections;
 import com.tronstride.loyalty.model.DiscountedProducts;
 import com.tronstride.loyalty.model.ProgramDetail;
 import com.tronstride.loyalty.service.ProgramDetailService;
@@ -62,8 +63,23 @@ public class ProgramDetailController {
         return programDetailService.updateProductTimeframe(id, timeSpanDTO);
     }
 
-    @GetMapping("/discountedProducts")
+    @GetMapping("/products/discountedProducts")
     public List<DiscountedProducts> getAllDiscountedProducts() {
         return programDetailService.getAllDiscountedProducts();
+    }
+
+    @GetMapping("/products/DiscountedCollections")
+    public List<DiscountedCollections> getAllDiscountedCollections() {
+        return programDetailService.getAllDiscountedProductsCollections();
+    }
+
+    @PostMapping("/newDiscountedProduct")
+    public Integer newDiscountedProduct(DiscountedProducts product) {
+        return programDetailService.createNewDiscountedProduct(product);
+    }
+
+    @PostMapping("/newDiscountedCollection")
+    public Integer newDiscountedCollection(DiscountedCollections collections) {
+        return programDetailService.createNewCollection(collections);
     }
 }

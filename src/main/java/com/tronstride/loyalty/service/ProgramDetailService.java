@@ -3,7 +3,6 @@ package com.tronstride.loyalty.service;
 import com.tronstride.loyalty.DTO.DiscountDetailDTO;
 import com.tronstride.loyalty.DTO.TimeSpanDTO;
 import com.tronstride.loyalty.model.*;
-import com.tronstride.loyalty.model.DiscountedProducts;
 import com.tronstride.loyalty.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +27,8 @@ public class ProgramDetailService {
     private ProductTimeFrameRepo timeFrameRepo;
     @Autowired
     private TimeSpanRepo timeSpanRepo;
+    @Autowired
+    DiscountedCollectionsRepo discountedCollectionsRepo;
     @Autowired
     DiscountedProductsRepo discountedProductsRepo;
 
@@ -159,7 +160,35 @@ public class ProgramDetailService {
         }
         return false;
     }
-    public List<DiscountedProducts> getAllDiscountedProducts(){
+
+    public List<DiscountedProducts> getAllDiscountedProducts() {
         return discountedProductsRepo.findAll();
+    }
+
+    public List<DiscountedCollections> getAllDiscountedProductsCollections() {
+        return discountedCollectionsRepo.findAll();
+    }
+
+    public Integer createNewCollection(DiscountedCollections collections) {
+        DiscountedCollections newCollection = new DiscountedCollections();
+        if (Objects.nonNull(collections.getDiscountedProductsList())) {
+            newCollection.setDiscountedProductsList(collections.getDiscountedProductsList());
+            discountedCollectionsRepo.save(newCollection);
+        } else {
+            return -1;
+        }
+        return newCollection.getId();
+    }
+
+    public Integer createNewDiscountedProduct(DiscountedProducts product) {
+        DiscountedProducts newProduct = new DiscountedProducts();
+        if (Objects.nonNull(product)) {
+            newProduct.setProductName(product.getProductName());
+            newProduct.setPrice(product.getPrice());
+            discountedProductsRepo.save(newProduct);
+        } else {
+            return -1;
+        }
+        return newProduct.getId();
     }
 }
