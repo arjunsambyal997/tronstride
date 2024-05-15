@@ -73,6 +73,10 @@ public class ProgramDetail {
     private OrderDiscountTypeEntity orderDiscountType;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "productId", referencedColumnName = "Id")
+    private DiscountedProducts discountedProducts;
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "productDiscountType", referencedColumnName = "Id")
     private ProductDiscountTypeEntity productDiscountType;
 
@@ -89,4 +93,6 @@ public class ProgramDetail {
     private String lastUpdated;
 
     private boolean expired;
+
+    private String productId;
 }
