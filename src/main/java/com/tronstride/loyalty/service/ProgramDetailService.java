@@ -3,6 +3,7 @@ package com.tronstride.loyalty.service;
 import com.tronstride.loyalty.DTO.DiscountDetailDTO;
 import com.tronstride.loyalty.DTO.TimeSpanDTO;
 import com.tronstride.loyalty.model.*;
+import com.tronstride.loyalty.model.DiscountedProducts;
 import com.tronstride.loyalty.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,8 @@ public class ProgramDetailService {
     private ProductTimeFrameRepo timeFrameRepo;
     @Autowired
     private TimeSpanRepo timeSpanRepo;
+    @Autowired
+    DiscountedProductsRepo discountedProductsRepo;
 
     public ProgramDetail saveDetail(ProgramDetail programDetail) {
 
@@ -152,10 +155,11 @@ public class ProgramDetailService {
         if (Objects.nonNull(oldProgramDetailData)) {
             oldProgramDetailData.getProductTimeframe().setPublishedOn(LocalDateTime.now());
             ProgramDetail savedProgramDetail = programDetailRepo.save(oldProgramDetailData);
-            if (Objects.nonNull(savedProgramDetail)) {
-                return true;
-            }
+            return true;
         }
         return false;
+    }
+    public List<DiscountedProducts> getAllDiscountedProducts(){
+        return discountedProductsRepo.findAll();
     }
 }

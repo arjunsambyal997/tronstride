@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "DiscountedProducts")
 public class DiscountedProducts {
     @jakarta.persistence.Id
     @Column(name = "ID")

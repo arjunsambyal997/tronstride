@@ -2,6 +2,7 @@ package com.tronstride.loyalty.controller;
 
 import com.tronstride.loyalty.DTO.DiscountDetailDTO;
 import com.tronstride.loyalty.DTO.TimeSpanDTO;
+import com.tronstride.loyalty.model.DiscountedProducts;
 import com.tronstride.loyalty.model.ProgramDetail;
 import com.tronstride.loyalty.service.ProgramDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,10 @@ public class ProgramDetailController {
     @PutMapping("/updateProductTimeframe/{id}")
     public Integer updateProductTimeFrame(@PathVariable Integer id, @RequestBody TimeSpanDTO timeSpanDTO) {
         return programDetailService.updateProductTimeframe(id, timeSpanDTO);
+    }
+
+    @GetMapping("/discountedProducts")
+    public List<DiscountedProducts> getAllDiscountedProducts() {
+        return programDetailService.getAllDiscountedProducts();
     }
 }
