@@ -119,7 +119,10 @@ public class ProgramDetailService {
     public Integer updateProductTimeframe(Integer id, TimeSpanDTO timeSpanDTO) {
         ProgramDetail programDetail = programDetailRepo.getReferenceById(id);
         TimeSpanEntity spanEntity = timeSpanRepo.getByType(timeSpanDTO.getType());
-
+        boolean flag = (Objects.nonNull(timeSpanDTO.getType()) && Objects.nonNull(timeSpanDTO.getValue()));
+        if (flag) {
+            programDetail.getProductTimeframe().setValidFor(true);
+        }
         if (Objects.nonNull(programDetail.getProductTimeframe())) {
             programDetail.getProductTimeframe().setTimeSpanEntity(spanEntity);
             programDetail.getProductTimeframe().setSpanValue(timeSpanDTO.getValue());
@@ -135,6 +138,9 @@ public class ProgramDetailService {
             Timeframe timeframe = new Timeframe();
             timeframe.setTimeSpanEntity(spanEntity);
             timeframe.setSpanValue(timeSpanDTO.getValue());
+            if (flag) {
+                timeframe.setValidFor(true);
+            }
             if (timeSpanDTO.getExpiredOn() != null) {
                 timeframe.setExpiresOn(timeSpanDTO.getExpiredOn());
             }
