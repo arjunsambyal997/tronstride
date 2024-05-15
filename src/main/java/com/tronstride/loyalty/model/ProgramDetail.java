@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -89,11 +90,11 @@ public class ProgramDetail {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id_discounted", referencedColumnName = "ID")
-    private List<DiscountedProducts> discountedProductsList;
+    private List<DiscountedProducts> discountedProductsList = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "collection_id_discounted", referencedColumnName = "ID")
-    private List<DiscountedCollections> discountedCollectionsList;
+    private List<DiscountedCollections> discountedCollectionsList = new ArrayList<>();
 
     @Column(name = "LastUpdated")
     @LastModifiedDate

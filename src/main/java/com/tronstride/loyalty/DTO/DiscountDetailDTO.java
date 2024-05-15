@@ -1,11 +1,11 @@
 package com.tronstride.loyalty.DTO;
 
-import com.tronstride.loyalty.model.DiscountTypeEntity;
-import com.tronstride.loyalty.model.OrderDiscountTypeEntity;
-import com.tronstride.loyalty.model.ProductDiscountTypeEntity;
+import com.tronstride.loyalty.model.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -17,5 +17,8 @@ public class DiscountDetailDTO {
     private OrderDiscountTypeEntity orderDiscountType;
 
     private ProductDiscountTypeEntity productDiscountType;
+
+    List<DiscountedProducts> discountedProductsList;
+    List<DiscountedCollections> discountedCollectionsList;
 
 }

@@ -95,6 +95,8 @@ public class ProgramDetailService {
                 if (detailDto.getProductDiscountType() != null) {
                     ProductDiscountTypeEntity productDiscountTypeEntity = productDiscountTypeRepo.getByProductDiscountType(detailDto.getProductDiscountType().getProductDiscountType());
                     updateDetail.setProductDiscountType(productDiscountTypeEntity);
+                    updateDetail.setDiscountedProductsList(detailDto.getDiscountedProductsList());
+                    updateDetail.setDiscountedCollectionsList(detailDto.getDiscountedCollectionsList());
                 }
             } else {
                 updateDetail.setProductDiscountType(null); // assuming we have the order present
