@@ -27,8 +27,9 @@ public class ProgramDetailController {
         return programDetailService.saveListDetail(programDetails);
     }
 
-    @PutMapping("/updateProgramDetail")
-    public ProgramDetail updateProgramDetail(@RequestBody ProgramDetail programDetail) {
+    @PutMapping("/updateProgramDetail/{id}")
+    public ProgramDetail updateProgramDetail(@PathVariable Integer id, @RequestBody ProgramDetail programDetail) {
+        programDetail.setId(id);
         return programDetailService.updateDetail(programDetail);
     }
 
@@ -42,8 +43,8 @@ public class ProgramDetailController {
         return programDetailService.getProgramDetailById(id);
     }
 
-    @PutMapping("/updateProgramDetail/{id}")
-    public Integer updateDetail(@PathVariable Integer id, @RequestBody DiscountDetailDTO detailDTO) {
+    @PutMapping("/addDiscountDetail/{id}")
+    public Integer addDiscountDetail(@PathVariable Integer id, @RequestBody DiscountDetailDTO detailDTO) {
         return programDetailService.updateProgramDetailById(detailDTO, id);
     }
 

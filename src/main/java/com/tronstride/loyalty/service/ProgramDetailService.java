@@ -120,14 +120,14 @@ public class ProgramDetailService {
         ProgramDetail programDetail = programDetailRepo.getReferenceById(id);
         TimeSpanEntity spanEntity = timeSpanRepo.getByType(timeSpanDTO.getType());
         boolean flag = (Objects.nonNull(timeSpanDTO.getType()) && Objects.nonNull(timeSpanDTO.getValue()));
-        if (flag) {
-            programDetail.getProductTimeframe().setValidFor(true);
+        if (!flag) {
+            programDetail.getProductTimeframe().setValidFor(false);
         }
         if (Objects.nonNull(programDetail.getProductTimeframe())) {
             programDetail.getProductTimeframe().setTimeSpanEntity(spanEntity);
             programDetail.getProductTimeframe().setSpanValue(timeSpanDTO.getValue());
-            if (timeSpanDTO.getExpiredOn() != null) {
-                programDetail.getProductTimeframe().setExpiresOn(timeSpanDTO.getExpiredOn());
+            if (timeSpanDTO.getExpiresOn() != null) {
+                programDetail.getProductTimeframe().setExpiresOn(timeSpanDTO.getExpiresOn());
             }
             if (timeSpanDTO.getStartsOn() != null) {
                 programDetail.getProductTimeframe().setStartOn(timeSpanDTO.getStartsOn());
@@ -141,8 +141,8 @@ public class ProgramDetailService {
             if (flag) {
                 timeframe.setValidFor(true);
             }
-            if (timeSpanDTO.getExpiredOn() != null) {
-                timeframe.setExpiresOn(timeSpanDTO.getExpiredOn());
+            if (timeSpanDTO.getExpiresOn() != null) {
+                timeframe.setExpiresOn(timeSpanDTO.getExpiresOn());
             }
             if (timeSpanDTO.getStartsOn() != null) {
                 timeframe.setStartOn(timeSpanDTO.getStartsOn());

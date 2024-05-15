@@ -13,7 +13,6 @@ public class TimeSpanDTO {
 
     private String type;
     private Integer value;
-    private Boolean validFor;
     private LocalDateTime startsOn;
-    private LocalDateTime expiredOn;
+    private LocalDateTime expiresOn;
 }
