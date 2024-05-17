@@ -166,82 +166,74 @@ public class ProgramDetailService {
         return programDetail.getId();
     }
 
-  //  public boolean publishPromo(int id) {
-//        ProgramDetail oldProgramDetailData = programDetailRepo.findById(id).orElse(null);
-//        if (Objects.nonNull(oldProgramDetailData)) {
-//            oldProgramDetailData.getProductTimeframe().setPublishedOn(LocalDateTime.now());
-//            ProgramDetail savedProgramDetail = programDetailRepo.save(oldProgramDetailData);
-//            return true;
-//        }
-//        return false;
-        public boolean publishPromo(int id, String postfix, String prefix, String customCode, int codeLength, int codeCount) {
-            ProgramDetail oldProgramDetailData = programDetailRepo.findById(id).orElse(null);
-
-            if (Objects.nonNull(oldProgramDetailData)) {
-                // Set publishedOn timestamp
-                oldProgramDetailData.getProductTimeframe().setPublishedOn(LocalDateTime.now());
-                ProgramDetail savedProgramDetail = programDetailRepo.save(oldProgramDetailData);
-
-                // Check if publishedOn is true (assuming publishedOn is a boolean field)
-                if (oldProgramDetailData.getProductTimeframe().isPublishedOn()) {
-                    // Generate coupons based on provided parameters
-                    generateCoupons(postfix, prefix, customCode, codeLength, codeCount);
-                }
-
-                return true;
-            }
-
-            return false;
+    public boolean publishPromo(int id) {
+        ProgramDetail oldProgramDetailData = programDetailRepo.findById(id).orElse(null);
+        if (Objects.nonNull(oldProgramDetailData)) {
+            // Set publishedOn timestamp
+            oldProgramDetailData.getProductTimeframe().setPublishedOn(LocalDateTime.now());
+            //ProgramDetail savedPublishedDetail = programDetailRepo.save(oldProgramDetailData);
+            List<Coupon> coupons = generateCoupons(oldProgramDetailData.getPostfix(), oldProgramDetailData.getPrefix(),
+                    oldProgramDetailData.getCustomCode(), oldProgramDetailData.getCodeLength(),
+                    Integer.parseInt(oldProgramDetailData.getCodeCount()), oldProgramDetailData.getCodeType());
+            programDetailRepo.save(oldProgramDetailData);
+            return true;
         }
+        return false;
+    }
 
-        public void generateCoupons(String postfix, String prefix, String customCode, int codeLength, int codeCount) {
-            List<Coupon> coupons = new ArrayList<>();
+    public List<Coupon> generateCoupons(String postfix, String prefix, String customCode, int codeLength, int codeCount, String type) {
+        List<Coupon> coupons = new ArrayList<>();
 
-            for (int i = 0; i < codeCount; i++) {
-                String couponCode = generateCouponCode(postfix, prefix, customCode, codeLength);
-                Coupon coupon = new Coupon();
-                coupon.setPrefix(prefix);
-                coupon.setPostfix(postfix);
+        for (int i = 0; i < codeCount; i++) {
+            String couponCode = generateCouponCode(postfix, prefix, customCode, codeLength);
+            Coupon coupon = new Coupon();
+            coupon.setPrefix(prefix);
+            coupon.setPostfix(postfix);
+            if (type.equalsIgnoreCase("standalone")) {
                 coupon.setCustomCode(customCode);
-                coupon.setCodeLength(codeLength);
-
-                // Save the generated coupon to the database
-                couponRepo.save(coupon);
+            } else {
+                coupon.setCustomCode(couponCode);
             }
+            coupon.setCodeLength(codeLength);
+            coupons.add(coupon);
+            // Save the generated coupon to the database
+            couponRepo.save(coupon);
+        }
+        return coupons;
+    }
+
+    public String generateCouponCode(String postfix, String prefix, String customCode, int codeLength) {
+        // Implement logic to generate a coupon code based on provided parameters
+        StringBuilder couponCodeBuilder = new StringBuilder();
+
+        if (prefix != null) {
+            couponCodeBuilder.append(prefix);
         }
 
-        public String generateCouponCode(String postfix, String prefix, String customCode, int codeLength) {
-            // Implement logic to generate a coupon code based on provided parameters
-            StringBuilder couponCodeBuilder = new StringBuilder();
+        // Generate random part of the coupon code
+        String randomPart = generateRandomCode(codeLength);
+        couponCodeBuilder.append(randomPart);
 
-            if (prefix != null) {
-                couponCodeBuilder.append(prefix);
-            }
-
-            // Generate random part of the coupon code
-            String randomPart = generateRandomCode(codeLength);
-            couponCodeBuilder.append(randomPart);
-
-            if (postfix != null) {
-                couponCodeBuilder.append(postfix);
-            }
-
-            return couponCodeBuilder.toString();
+        if (postfix != null) {
+            couponCodeBuilder.append(postfix);
         }
 
-        public String generateRandomCode(int length) {
-            // Generate a random code of specified length (using characters/digits)
-            String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            Random random = new Random();
-            StringBuilder codeBuilder = new StringBuilder();
+        return couponCodeBuilder.toString();
+    }
 
-            for (int i = 0; i < length; i++) {
-                char randomChar = characters.charAt(random.nextInt(characters.length()));
-                codeBuilder.append(randomChar);
-            }
+    public String generateRandomCode(int length) {
+        // Generate a random code of specified length (using characters/digits)
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random random = new Random();
+        StringBuilder codeBuilder = new StringBuilder();
 
-            return codeBuilder.toString();
+        for (int i = 0; i < length; i++) {
+            char randomChar = characters.charAt(random.nextInt(characters.length()));
+            codeBuilder.append(randomChar);
         }
+
+        return codeBuilder.toString();
+    }
 
 
     public List<DiscountedProducts> getAllDiscountedProducts() {

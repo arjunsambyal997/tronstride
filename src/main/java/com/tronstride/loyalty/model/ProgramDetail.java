@@ -46,8 +46,6 @@ public class ProgramDetail {
     @Column(name = "CodeCount", nullable = false)
     private String codeCount;
 
-//    @Column(name = "CharSet")
-//    private String charset;
 
     @Column(name = "CodeLength", nullable = false)
     private Integer codeLength;
@@ -98,6 +96,9 @@ public class ProgramDetail {
     @JoinColumn(name = "collection_id_discounted", referencedColumnName = "ID")
     private List<DiscountedCollections> discountedCollectionsList = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "coupon_id", referencedColumnName = "ID")
+    private List<Coupon> coupons = new ArrayList<>();
     @Column(name = "LastUpdated")
     @LastModifiedDate
     private String lastUpdated;

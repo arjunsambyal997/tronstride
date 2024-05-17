@@ -4,7 +4,6 @@ package com.tronstride.loyalty.DTO;
 import jakarta.persistence.Entity;
 import lombok.Data;
 
-@Entity
 @Data
 public class CouponRequest {
 
